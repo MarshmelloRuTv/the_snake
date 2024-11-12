@@ -71,6 +71,7 @@ class Apple(GameObject):
 
     def randomize_position(self, position_snake):
         """Устанавливает случайное положение яблока на игровом поле"""
+
         def random_apple():
             return (
                 randint(RANDOM_MIN_X, RANDOM_MAX_X) * GRID_SIZE,
@@ -89,6 +90,7 @@ class Snake(GameObject):
     Этот класс управляет её движением, отрисовкой,
     а также обрабатывает действия пользователя.
     """
+
     def __init__(self) -> None:
         super().__init__()
         self.length = 1
