@@ -18,8 +18,6 @@ DOWN = (0, 1)
 LEFT = (-1, 0)
 RIGHT = (1, 0)
 
-START_POSITION_APPLE = 100, 100
-
 BOARD_BACKGROUND_COLOR = (0, 0, 0)
 
 BORDER_COLOR = (93, 216, 228)
@@ -46,7 +44,6 @@ class GameObject:
     def __init__(self) -> None:
         self.position = ((SCREEN_WIDTH // 2), (SCREEN_HEIGHT // 2))
         self.body_color = APPLE_COLOR
-        self.position = START_POSITION_APPLE
 
     def draw(self):
         """Это абстрактный метод,
@@ -62,7 +59,7 @@ class Apple(GameObject):
     def __init__(self) -> None:
         super().__init__()
         self.body_color = APPLE_COLOR
-        self.position
+        self.randomize_position(self.position)
 
     def draw(self):
         """Отрисовывает яблоко на игровой поверхности."""
@@ -91,6 +88,10 @@ class Snake(GameObject):
     def __init__(self) -> None:
         super().__init__()
         self.reset()
+        self.direction = DOWN
+        self.next_direction = None
+        self.body_color = SNAKE_COLOR
+        self.last = None
 
     def draw(self):
         """Отрисовывает змейку на экране"""
@@ -137,11 +138,8 @@ class Snake(GameObject):
     def reset(self):
         """Сбрасывает змейку в начальное состояние."""
         self.length = 1
-        self.body_color = SNAKE_COLOR
         self.positions = [(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)]
         self.direction = choice([DOWN, UP, LEFT, RIGHT])
-        self.next_direction = None
-        self.last = None
 
 
 def handle_keys(game_object):
@@ -182,10 +180,9 @@ def main():
             snake.reset()
             screen.fill(BOARD_BACKGROUND_COLOR)
 
+        snake.move()
         apple.draw()
         snake.draw()
-        snake.move()
-
         pygame.display.update()
 
 
